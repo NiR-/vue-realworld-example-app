@@ -1,0 +1,99 @@
+[
+  {
+    "RawOp": "GnoKeGRvY2tlci1pbWFnZTovL2RvY2tlci5pby9saWJyYXJ5L25vZGU6bHRzLWFscGluZUBzaGEyNTY6MDM1NGFhNTg4NjdmYjg3M2VmNDdkODM0NWQyMWRkZGVmMTMwOWEzNjIyNmE0MjUyMTc5MTBiYzE5ZmRlNWZiNVIOCgVhbWQ2NBIFbGludXhaAA==",
+    "Op": {
+      "Op": {
+        "source": {
+          "identifier": "docker-image://docker.io/library/node:lts-alpine@sha256:0354aa58867fb873ef47d8345d21dddef1309a36226a425217910bc19fde5fb5"
+        }
+      },
+      "platform": {
+        "Architecture": "amd64",
+        "OS": "linux"
+      },
+      "constraints": {}
+    },
+    "Digest": "sha256:4ccbdc7ce28786e5d504975e88b6b169840b07095c8f1b520e577a0dba19ba02",
+    "OpMetadata": {
+      "caps": {
+        "source.image": true
+      }
+    }
+  },
+  {
+    "RawOp": "CkkKR3NoYTI1NjpiNzA1YmE4Mjg1ZjA4N2Q2ZjMzYWUyZTFiNGQzZWMwMzFhOGY4ZGE5MTYwNjhlODYyMmY0YTBhMTM4NjE5NTAx",
+    "Op": {
+      "inputs": [
+        {
+          "digest": "sha256:b705ba8285f087d6f33ae2e1b4d3ec031a8f8da916068e8622f4a0a138619501",
+          "index": 0
+        }
+      ],
+      "Op": null
+    },
+    "Digest": "sha256:b480b3ad957c425a80603986bc3755af550b273b274f834bc0304d191b3ed3bc",
+    "OpMetadata": {
+      "caps": {
+        "constraints": true,
+        "meta.description": true,
+        "platform": true
+      }
+    }
+  },
+  {
+    "RawOp": "CkkKR3NoYTI1Njo0Y2NiZGM3Y2UyODc4NmU1ZDUwNDk3NWU4OGI2YjE2OTg0MGIwNzA5NWM4ZjFiNTIwZTU3N2EwZGJhMTliYTAyIjESLxD///////////8BMiIKBC9hcHAQ6AMYASIKCgMQ6AcSAxDoByj///////////8BUg4KBWFtZDY0EgVsaW51eFoA",
+    "Op": {
+      "inputs": [
+        {
+          "digest": "sha256:4ccbdc7ce28786e5d504975e88b6b169840b07095c8f1b520e577a0dba19ba02",
+          "index": 0
+        }
+      ],
+      "Op": {
+        "file": {
+          "actions": [
+            {
+              "input": 0,
+              "secondaryInput": -1,
+              "output": 0,
+              "Action": {
+                "mkdir": {
+                  "path": "/app",
+                  "mode": 488,
+                  "makeParents": true,
+                  "owner": {
+                    "user": {
+                      "User": {
+                        "byID": 1000
+                      }
+                    },
+                    "group": {
+                      "User": {
+                        "byID": 1000
+                      }
+                    }
+                  },
+                  "timestamp": -1
+                }
+              }
+            }
+          ]
+        }
+      },
+      "platform": {
+        "Architecture": "amd64",
+        "OS": "linux"
+      },
+      "constraints": {}
+    },
+    "Digest": "sha256:b705ba8285f087d6f33ae2e1b4d3ec031a8f8da916068e8622f4a0a138619501",
+    "OpMetadata": {
+      "description": {
+        "llb.customname": "Mkdir /app"
+      },
+      "caps": {
+        "file.base": true
+      }
+    }
+  }
+]

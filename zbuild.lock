@@ -1,0 +1,20 @@
+base: docker.io/library/node:lts-alpine@sha256:0354aa58867fb873ef47d8345d21dddef1309a36226a425217910bc19fde5fb5
+defhash: 7913082722905847457
+osrelease:
+  name: alpine
+  versionname: ""
+  versionid: 3.11.5
+source_context: null
+stages:
+  dev:
+    system_packages: {}
+  prod:
+    system_packages: {}
+webserver:
+  base_image: docker.io/library/nginx:latest@sha256:282530fcb7cd19f3848c7b611043f82ae4be3781cb00105a1d593d7e6286b596
+  osrelease:
+    name: debian
+    versionname: buster
+    versionid: "10"
+  system_packages:
+    curl: 7.64.0-4+deb10u1

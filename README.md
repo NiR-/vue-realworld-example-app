@@ -1,83 +1,134 @@
-[![RealWorld Frontend](https://img.shields.io/badge/realworld-frontend-%23783578.svg)](http://realworld.io)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+# Buildkit bug reproducer
 
-# ![RealWorld Example App](./static/rwv-logo.png)
+* 1st build: 3.27MB
+* 2nd build: 147.38MB
+* 3st build: 2.16MB
+* 4st build: 2.16MB
+* 5st build: 43.64KB
 
-> Vue.js codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API.
-
-Project demo is available at https://vue-vuex-realworld.netlify.com/#/
-
-This codebase was created to demonstrate a fully fledged fullstack application built with **Vue.js** including CRUD operations, authentication, routing, pagination, and more.
-
-We've gone to great lengths to adhere to the **Vue.js** community styleguides & best practices.
-
-For more information on how to this works with other frontends/backends, head over to the [RealWorld](https://github.com/gothinkster/realworld) repo.
-
-## Getting started
-
-Before contributing please read the following:
-
-1. [RealWorld guidelines](https://github.com/gothinkster/realworld/tree/master/spec) for implementing a new framework,
-2. [RealWorld frontend instructions](https://github.com/gothinkster/realworld-starter-kit/blob/master/FRONTEND_INSTRUCTIONS.md)
-3. [Realworld API endpoints](https://github.com/gothinkster/realworld/tree/master/api)
-4. [Vue.js styleguide](https://vuejs.org/v2/style-guide/index.html). Priority A and B categories must be respected.
-5. [Editorconfig setup](https://editorconfig.org/#download). Most of the common editors support editorconfig by default (check the editorconfig download link for your ide), but editorconfig npm package have to installed globally for it to work,
-
-```bash
-# install editorconfig globally
-> npm install -g editorconfig
 ```
+$ zbuild update
+$ zbuild debug-llb --json > build1.json
+$ make build
+docker buildx build --load -t vue-example-app -f zbuild.yml --target dev .
+[+] Building 3.9s (9/9) FINISHED
+ => [internal] load .dockerignore                                                                                                                                                   0.0s
+ => => transferring context: 2B                                                                                                                                                     0.0s
+ => [internal] load build definition from zbuild.yml                                                                                                                                0.0s
+ => => transferring dockerfile: 32B                                                                                                                                                 0.0s
+ => resolve image config for docker.io/akerouanton/zbuilder:200413-03                                                                                                               0.0s
+ => CACHED docker-image://docker.io/akerouanton/zbuilder:200413-03                                                                                                                  0.0s
+ => load zbuild config files from build context                                                                                                                                     0.0s
+ => => transferring context: 615B                                                                                                                                                   0.0s
+ => local://context                                                                                                                                                                 1.5s
+ => => transferring context: 3.27MB                                                                                                                                                 1.4s
+ => docker-image://docker.io/library/node:lts-alpine@sha256:0354aa58867fb873ef47d8345d21dddef1309a36226a425217910bc19fde5fb5                                                        0.0s
+ => => resolve docker.io/library/node:lts-alpine@sha256:0354aa58867fb873ef47d8345d21dddef1309a36226a425217910bc19fde5fb5                                                            0.0s
+ => Mkdir /app                                                                                                                                                                      0.1s
+ => exporting to image                                                                                                                                                              0.3s
+ => => exporting layers                                                                                                                                                             0.3s
+ => => writing image sha256:8857a6213b1b0e221f47f8d1a39e750c139a3f998834814ce6549c912c7af88b                                                                                        0.0s
+ => => naming to docker.io/library/vue-example-app                                                                                                                                  0.0s
 
-The stack is built using [vue-cli webpack](https://github.com/vuejs-templates/webpack) so to get started all you have to do is:
+$ make install-deps
+docker run --rm -it -v /home/akerouanton/projets/github.com/NiR-/vue-realworld-example-app:/app -w /app vue-example-app yarn install
+yarn install v1.22.4
+[1/4] Resolving packages...
+[2/4] Fetching packages...
+warning url-loader@1.1.2: Invalid bin field for "url-loader".
+info fsevents@1.2.9: The platform "linux" is incompatible with this module.
+info "fsevents@1.2.9" is an optional dependency and failed compatibility check. Excluding it from installation.
+[3/4] Linking dependencies...
+warning "@vue/eslint-config-prettier > eslint-config-prettier@3.6.0" has unmet peer dependency "eslint@>=3.14.1".
+warning "@vue/eslint-config-prettier > eslint-plugin-prettier@3.1.0" has unmet peer dependency "eslint@>= 5.0.0".
+warning " > sass-loader@7.3.1" has unmet peer dependency "webpack@^3.0.0 || ^4.0.0".
+[4/4] Building fresh packages...
+Done in 25.27s.
 
-``` bash
-# install dependencies
-> yarn install
-# serve with hot reload at localhost:8080
-> yarn serve
+$ zbuild debug-llb --json > build2.json
+$ diff build*
+$ make build
+docker buildx build --load -t vue-example-app -f zbuild.yml --target dev .
+[+] Building 5.6s (9/9) FINISHED
+ => [internal] load .dockerignore                                                                                                                                                   0.0s
+ => => transferring context: 2B                                                                                                                                                     0.0s
+ => [internal] load build definition from zbuild.yml                                                                                                                                0.0s
+ => => transferring dockerfile: 32B                                                                                                                                                 0.0s
+ => resolve image config for docker.io/akerouanton/zbuilder:200413-03                                                                                                               0.0s
+ => CACHED docker-image://docker.io/akerouanton/zbuilder:200413-03                                                                                                                  0.0s
+ => load zbuild config files from build context                                                                                                                                     0.0s
+ => => transferring context: 63B                                                                                                                                                    0.0s
+ => local://context                                                                                                                                                                 3.2s
+ => => transferring context: 147.38MB                                                                                                                                               3.1s
+ => docker-image://docker.io/library/node:lts-alpine@sha256:0354aa58867fb873ef47d8345d21dddef1309a36226a425217910bc19fde5fb5                                                        0.0s
+ => CACHED Mkdir /app                                                                                                                                                               0.0s
+ => exporting to image                                                                                                                                                              0.0s
+ => => exporting layers                                                                                                                                                             0.0s
+ => => writing image sha256:f06535692bfbf08e7880f32a809ae0620e5d58896f9dfced194fbab1e0102e55                                                                                        0.0s
+ => => naming to docker.io/library/vue-example-app                                                                                                                                  0.0s
+
+$ zbuild debug-llb --json > build3.json
+$ diff build2.json build3.json
+$ make build
+docker buildx build --load -t vue-example-app -f zbuild.yml --target dev .
+[+] Building 3.0s (9/9) FINISHED
+ => [internal] load build definition from zbuild.yml                                                                                                                                0.0s
+ => => transferring dockerfile: 32B                                                                                                                                                 0.0s
+ => [internal] load .dockerignore                                                                                                                                                   0.0s
+ => => transferring context: 2B                                                                                                                                                     0.0s
+ => resolve image config for docker.io/akerouanton/zbuilder:200413-03                                                                                                               0.0s
+ => CACHED docker-image://docker.io/akerouanton/zbuilder:200413-03                                                                                                                  0.0s
+ => load zbuild config files from build context                                                                                                                                     0.0s
+ => => transferring context: 63B                                                                                                                                                    0.0s
+ => local://context                                                                                                                                                                 0.8s
+ => => transferring context: 2.16MB                                                                                                                                                 0.8s
+ => docker-image://docker.io/library/node:lts-alpine@sha256:0354aa58867fb873ef47d8345d21dddef1309a36226a425217910bc19fde5fb5                                                        0.0s
+ => CACHED Mkdir /app                                                                                                                                                               0.0s
+ => exporting to image                                                                                                                                                              0.0s
+ => => exporting layers                                                                                                                                                             0.0s
+ => => writing image sha256:dea7d363aaec92a0e781c28fd3e9427cb753209e7028b7fd5e138df787853ad7                                                                                        0.0s
+ => => naming to docker.io/library/vue-example-app                                                                                                                                  0.0s
+
+$ make build
+docker buildx build --load -t vue-example-app -f zbuild.yml --target dev .
+[+] Building 3.2s (9/9) FINISHED
+ => [internal] load .dockerignore                                                                                                                                                   0.0s
+ => => transferring context: 2B                                                                                                                                                     0.0s
+ => [internal] load build definition from zbuild.yml                                                                                                                                0.0s
+ => => transferring dockerfile: 32B                                                                                                                                                 0.0s
+ => resolve image config for docker.io/akerouanton/zbuilder:200413-03                                                                                                               0.0s
+ => CACHED docker-image://docker.io/akerouanton/zbuilder:200413-03                                                                                                                  0.0s
+ => load zbuild config files from build context                                                                                                                                     0.0s
+ => => transferring context: 63B                                                                                                                                                    0.0s
+ => local://context                                                                                                                                                                 0.8s
+ => => transferring context: 2.16MB                                                                                                                                                 0.7s
+ => docker-image://docker.io/library/node:lts-alpine@sha256:0354aa58867fb873ef47d8345d21dddef1309a36226a425217910bc19fde5fb5                                                        0.0s
+ => CACHED Mkdir /app                                                                                                                                                               0.0s
+ => exporting to image                                                                                                                                                              0.0s
+ => => exporting layers                                                                                                                                                             0.0s
+ => => writing image sha256:d640e630192a8391c90b6b5a3a881a0a44d770b4e0ce32f7b76dfd12ebdaa6b9                                                                                        0.0s
+ => => naming to docker.io/library/vue-example-app                                                                                                                                  0.0s
+
+$ rm -rf node_module
+$ zbuild debug-llb --json > build5.json
+$ diff build4.json build5.json
+$ make build
+docker buildx build --load -t vue-example-app -f zbuild.yml --target dev .
+[+] Building 2.9s (9/9) FINISHED
+ => [internal] load .dockerignore                                                                                                                                                   0.0s
+ => => transferring context: 2B                                                                                                                                                     0.0s
+ => [internal] load build definition from zbuild.yml                                                                                                                                0.0s
+ => => transferring dockerfile: 32B                                                                                                                                                 0.0s
+ => resolve image config for docker.io/akerouanton/zbuilder:200413-03                                                                                                               0.0s
+ => CACHED docker-image://docker.io/akerouanton/zbuilder:200413-03                                                                                                                  0.0s
+ => load zbuild config files from build context                                                                                                                                     0.0s
+ => => transferring context: 63B                                                                                                                                                    0.0s
+ => local://context                                                                                                                                                                 0.6s
+ => => transferring context: 43.64kB                                                                                                                                                0.5s
+ => docker-image://docker.io/library/node:lts-alpine@sha256:0354aa58867fb873ef47d8345d21dddef1309a36226a425217910bc19fde5fb5                                                        0.0s
+ => CACHED Mkdir /app                                                                                                                                                               0.0s
+ => exporting to image                                                                                                                                                              0.0s
+ => => exporting layers                                                                                                                                                             0.0s
+ => => writing image sha256:476e78d61e709ae4b2cee434cadb0695f7bcc2500dbccfd3843fa28715be6935                                                                                        0.0s
+ => => naming to docker.io/library/vue-example-app                                                                                                                                  0.0s
 ```
-
-Other commands available are:
-
-``` bash
-# build for production with minification
-yarn run build
-
-# run unit tests
-yarn test
-```
-
-## To know
-
-Current arbitrary choices are:
-
-- Vuex modules for store
-- Vue-axios for ajax requests
-- 'rwv' as prefix for components
-
-These can be changed when the contributors reach a consensus.
-
-## FAQ
-
-<p><details>
-  <summary><b>Where can I find the service worker file?</b></summary>
-
-  The service worker file is generated automatically. The implementation can be found under [`src/registerServiceWorker.js`](https://github.com/gothinkster/vue-realworld-example-app/blob/eeaeb34fa440d00cd400545301ea203bd2a59284/src/registerServiceWorker.js). You can find the dependencies implementation in this repo: [yyx990803/register-service-worker](https://github.com/yyx990803/register-service-worker#readme).
-
-  Also, Google provided a good documentation on how to register a service worker: https://developers.google.com/web/fundamentals/primers/service-workers/registration
-</details></p>
-
-<p><details>
-  <summary><b>Vue.js Function API / Migration to Vue.js 3</b></summary>
-
-  Related resources:
-
-  - [Vue.js Function API RFC](https://github.com/vuejs/rfcs/blob/function-apis/active-rfcs/0000-function-api.md)
-  - [`vue-function-api` plugin](https://github.com/vuejs/vue-function-api)
-
-  Vue.js 3 will likely introduce breaking changes on how Vue.js applications will look like. For example, the Vue.js Function API might be introduced. This would cause a lot of our components to change in the overall structure. The changes would be minimal though. With the `vue-function-api` plugin, these changes could be applied already. The problem is that multiple integrations are not working with the plugin. There are intentions to make this work, but for the time being, we should rather focus on different areas. If you still want to be experimental with it, we are happy to get a Pull Request with some experimental feature implementations.
-</details></p>
-
-## Connect
-
-Join us on [Discord](https://discord.gg/NE2jNmg)

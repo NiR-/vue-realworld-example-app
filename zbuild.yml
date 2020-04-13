@@ -1,0 +1,14 @@
+# syntax=akerouanton/zbuilder:200413-03
+kind: nodejs
+version: lts
+alpine: true
+
+build_command: yarn build
+
+sources:
+  - public/
+  - src/
+  - static/
+  - .eslintrc.js
+  - babel.config.js
+  - postcss.config.js
